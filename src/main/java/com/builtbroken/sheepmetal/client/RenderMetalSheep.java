@@ -2,7 +2,6 @@ package com.builtbroken.sheepmetal.client;
 
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
-import net.minecraft.client.model.ModelSheep2;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -13,12 +12,12 @@ import net.minecraft.util.ResourceLocation;
  */
 public class RenderMetalSheep extends RenderLiving<EntityMetalSheep>
 {
-    private static final ResourceLocation SHEARED_SHEEP_TEXTURES = new ResourceLocation(SheepMetal.DOMAIN,"textures/entity/metal_sheep.png");
+    private static final ResourceLocation SHEARED_SHEEP_TEXTURES = new ResourceLocation(SheepMetal.DOMAIN, "textures/entity/metal_sheep.png");
 
     public RenderMetalSheep(RenderManager renderManager)
     {
-        super(renderManager, new ModelSheep2(), 0.7F);
-        //this.addLayer(new LayerSheepWool(this));
+        super(renderManager, new ModelMetalSheep2(), 0.7F);
+        this.addLayer(new LayerMetalSheepWool(this));
     }
 
     @Override

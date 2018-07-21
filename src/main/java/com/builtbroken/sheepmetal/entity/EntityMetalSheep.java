@@ -7,7 +7,6 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -252,12 +251,12 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
     }
 
     @Override
-    public EntitySheep createChild(EntityAgeable ageable)
+    public EntityMetalSheep createChild(EntityAgeable ageable)
     {
-        EntitySheep entitysheep = (EntitySheep) ageable;
-        EntitySheep entitysheep1 = new EntitySheep(this.world);
-        entitysheep1.setFleeceColor(entitysheep.getFleeceColor()); //TODO add metal mixing
-        return entitysheep1;
+        EntityMetalSheep EntityMetalSheep = (EntityMetalSheep) ageable;
+        EntityMetalSheep EntityMetalSheep1 = new EntityMetalSheep(this.world);
+        EntityMetalSheep1.setWoolType(EntityMetalSheep.getWoolType()); //TODO add metal mixing
+        return EntityMetalSheep1;
     }
 
     /**

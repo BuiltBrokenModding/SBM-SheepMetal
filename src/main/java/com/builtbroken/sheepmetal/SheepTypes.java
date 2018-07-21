@@ -6,28 +6,30 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 
+import java.awt.*;
+
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by Dark(DarkGuardsman, Robert) on 7/21/2018.
  */
 public enum SheepTypes
 {
-    COPPER("copper"),
-    TIN("tin"),
-    LEAD("lead"),
-    SILVER("silver"),
-    URANIUM("uranium"),
-    BRASS("brass"),
-    BRONZE("bronze"),
-    STEEL("steel"),
-    ELECTRUM("electrum"),
-    NICKEL("nickel"),
-    ALUMINUM("aluminum"),
-    ZINC("zinc"),
-    PLATINUM("platinum"),
-    TITANIUM("titanium"),
-    GOLD("gold"),
-    IRON("iron");
+    COPPER("copper", new Color(158,90,56)),
+    TIN("tin", new Color(172,198,197)),
+    LEAD("lead", new Color(67,60,85)),
+    SILVER("silver", new Color(138,176,201)),
+    URANIUM("uranium", new Color(90,121,74)),
+    BRASS("brass", new Color(214,177,60)),
+    BRONZE("bronze", new Color(181,127,66)),
+    STEEL("steel", new Color(104,105,107)),
+    ELECTRUM("electrum", new Color(224,220,96)),
+    NICKEL("nickel", new Color(174,185,130)),
+    ALUMINUM("aluminum", new Color(199,205,206)),
+    ZINC("zinc", new Color(215,215,145)),
+    PLATINUM("platinum", new Color(206,222,236)),
+    TITANIUM("titanium", new Color(119,133,153)),
+    GOLD("gold", new Color(255,240,90)),
+    IRON("iron", new Color(168,168,168));
 
     public Item woolItem;
 
@@ -37,10 +39,12 @@ public enum SheepTypes
     public ResourceLocation entityDropTable;
 
     public final String name;
+    private final Color woolColor;
 
-    SheepTypes(String name)
+    SheepTypes(String name, Color woolColor)
     {
         this.name = name;
+        this.woolColor = woolColor;
     }
 
     public static void initAll()
@@ -68,5 +72,10 @@ public enum SheepTypes
     public ItemStack getWoolItem()
     {
         return new ItemStack(woolItem);
+    }
+
+    public Color getWoolColor()
+    {
+        return woolColor;
     }
 }
