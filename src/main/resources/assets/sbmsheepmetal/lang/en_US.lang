@@ -1,0 +1,56 @@
+## Misc
+entity.sbmsheepmetal:sheep.metal.name=Metal Wool Sheep
+
+## Item names
+item.sbmsheepmetal:wool.copper.name=Copper Wool
+item.sbmsheepmetal:wool.tin.name=Tin Wool
+item.sbmsheepmetal:wool.lead.name=Lead Wool
+item.sbmsheepmetal:wool.silver.name=Silver Wool
+item.sbmsheepmetal:wool.uranium.name=Uranium Wool
+item.sbmsheepmetal:wool.brass.name=Brass Wool
+item.sbmsheepmetal:wool.bronze.name=Bronze Wool
+item.sbmsheepmetal:wool.steel.name=Steel Wool
+item.sbmsheepmetal:wool.electrum.name=Electrum Wool
+item.sbmsheepmetal:wool.nickel.name=Nickel Wool
+item.sbmsheepmetal:wool.aluminum.name=Aluminum Wool
+item.sbmsheepmetal:wool.zinc.name=Zinc Wool
+item.sbmsheepmetal:wool.platinum.name=Platinum Wool
+item.sbmsheepmetal:wool.titanium.name=Titanium Wool
+item.sbmsheepmetal:wool.gold.name=Gold Wool
+item.sbmsheepmetal:wool.iron.name=Iron Wool
+
+## Tile names
+tile.sbmsheepmetal:wool.copper.name=Copper Wool
+tile.sbmsheepmetal:wool.tin.name=Tin Wool
+tile.sbmsheepmetal:wool.lead.name=Lead Wool
+tile.sbmsheepmetal:wool.silver.name=Silver Wool
+tile.sbmsheepmetal:wool.uranium.name=Uranium Wool
+tile.sbmsheepmetal:wool.brass.name=Brass Wool
+tile.sbmsheepmetal:wool.bronze.name=Bronze Wool
+tile.sbmsheepmetal:wool.steel.name=Steel Wool
+tile.sbmsheepmetal:wool.electrum.name=Electrum Wool
+tile.sbmsheepmetal:wool.nickel.name=Nickel Wool
+tile.sbmsheepmetal:wool.aluminum.name=Aluminum Wool
+tile.sbmsheepmetal:wool.zinc.name=Zinc Wool
+tile.sbmsheepmetal:wool.platinum.name=Platinum Wool
+tile.sbmsheepmetal:wool.titanium.name=Titanium Wool
+tile.sbmsheepmetal:wool.gold.name=Gold Wool
+tile.sbmsheepmetal:wool.iron.name=Iron Wool
+
+## Entity names
+entity.sbmsheepmetal:wool.copper.name=Copper Wool Sheep
+entity.sbmsheepmetal:wool.tin.name=Tin Wool Sheep
+entity.sbmsheepmetal:wool.lead.name=Lead Wool Sheep
+entity.sbmsheepmetal:wool.silver.name=Silver Wool Sheep
+entity.sbmsheepmetal:wool.uranium.name=Uranium Wool Sheep
+entity.sbmsheepmetal:wool.brass.name=Brass Wool Sheep
+entity.sbmsheepmetal:wool.bronze.name=Bronze Wool Sheep
+entity.sbmsheepmetal:wool.steel.name=Steel Wool Sheep
+entity.sbmsheepmetal:wool.electrum.name=Electrum Wool Sheep
+entity.sbmsheepmetal:wool.nickel.name=Nickel Wool Sheep
+entity.sbmsheepmetal:wool.aluminum.name=Aluminum Wool Sheep
+entity.sbmsheepmetal:wool.zinc.name=Zinc Wool Sheep
+entity.sbmsheepmetal:wool.platinum.name=Platinum Wool Sheep
+entity.sbmsheepmetal:wool.titanium.name=Titanium Wool Sheep
+entity.sbmsheepmetal:wool.gold.name=Gold Wool Sheep
+entity.sbmsheepmetal:wool.iron.name=Iron Wool Sheep

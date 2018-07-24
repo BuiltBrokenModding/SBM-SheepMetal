@@ -4,6 +4,7 @@ import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.SheepTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -19,5 +20,6 @@ public class BlockMetalWool extends Block
         this.type = type;
         setUnlocalizedName(SheepMetal.PREFIX + "wool." + type.name);
         setRegistryName(SheepMetal.PREFIX + "wool_block_" + type.name);
+        setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 }

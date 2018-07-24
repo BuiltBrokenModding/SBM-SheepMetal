@@ -3,6 +3,7 @@ package com.builtbroken.sheepmetal.entity;
 import com.builtbroken.sheepmetal.SheepTypes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
@@ -21,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -106,6 +108,34 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
         super.entityInit();
         this.dataManager.register(WOOL_TYPE, (byte) 0);
         this.dataManager.register(IS_SHEARED, false);
+    }
+
+    @Override
+    public String getName()
+    {
+        if (this.hasCustomName())
+        {
+            return this.getCustomNameTag();
+        }
+        else
+        {
+            String key = "entity.wool." + getWoolType().name + ".name";
+            key = I18n.translateToLocal(key);
+
+            if (!key.isEmpty() && !key.contains("."))
+            {
+                return key;
+            }
+
+            String s = EntityList.getEntityString(this);
+
+            if (s == null)
+            {
+                s = "generic";
+            }
+
+            return I18n.translateToLocal("entity." + s + ".name");
+        }
     }
 
     @Override

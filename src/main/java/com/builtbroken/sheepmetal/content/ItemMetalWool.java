@@ -2,6 +2,7 @@ package com.builtbroken.sheepmetal.content;
 
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.SheepTypes;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 /**
@@ -17,5 +18,6 @@ public class ItemMetalWool extends Item
         this.type = type;
         setUnlocalizedName(SheepMetal.PREFIX + "wool." + type.name);
         setRegistryName(SheepMetal.PREFIX + "wool_item_" + type.name);
+        setCreativeTab(CreativeTabs.MATERIALS);
     }
 }
