@@ -1,5 +1,6 @@
 package com.builtbroken.sheepmetal.entity;
 
+import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.SheepTypes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
@@ -119,7 +120,7 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
         }
         else
         {
-            String key = "entity.wool." + getWoolType().name + ".name";
+            String key = "entity." + SheepMetal.PREFIX + "sheep.wool." + getWoolType().name + ".name";
             key = I18n.translateToLocal(key);
 
             if (!key.isEmpty() && !key.contains("."))
