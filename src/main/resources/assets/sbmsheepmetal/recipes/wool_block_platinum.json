@@ -1,0 +1,18 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "WWW",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "sbmsheepmetal:wool_item_platinum"
+    }
+  },
+  "result": {
+    "item": "sbmsheepmetal:wool_block_platinum",
+    "data": 0,
+    "count": 1
+  }
+}

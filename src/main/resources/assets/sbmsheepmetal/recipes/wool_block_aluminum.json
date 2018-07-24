@@ -1,0 +1,18 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "WWW",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "sbmsheepmetal:wool_item_aluminum"
+    }
+  },
+  "result": {
+    "item": "sbmsheepmetal:wool_block_aluminum",
+    "data": 0,
+    "count": 1
+  }
+}
