@@ -18,7 +18,7 @@ public class BlockMetalWool extends Block
     {
         super(Material.IRON);
         this.type = type;
-        setUnlocalizedName(SheepMetal.PREFIX + "wool." + type.name);
+        setTranslationKey(SheepMetal.PREFIX + "wool." + type.name);
         setRegistryName(SheepMetal.PREFIX + "wool_block_" + type.name);
         setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }

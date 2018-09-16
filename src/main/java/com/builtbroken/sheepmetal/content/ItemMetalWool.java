@@ -16,7 +16,7 @@ public class ItemMetalWool extends Item
     public ItemMetalWool(SheepTypes type)
     {
         this.type = type;
-        setUnlocalizedName(SheepMetal.PREFIX + "wool." + type.name);
+        setTranslationKey(SheepMetal.PREFIX + "wool." + type.name);
         setRegistryName(SheepMetal.PREFIX + "wool_item_" + type.name);
         setCreativeTab(CreativeTabs.MATERIALS);
     }

@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -14,22 +15,24 @@ import java.awt.*;
  */
 public enum SheepTypes
 {
-    COPPER("copper", new Color(158,90,56)),
-    TIN("tin", new Color(172,198,197)),
-    LEAD("lead", new Color(67,60,85)),
-    SILVER("silver", new Color(138,176,201)),
-    URANIUM("uranium", new Color(90,121,74)),
-    BRASS("brass", new Color(214,177,60)),
-    BRONZE("bronze", new Color(181,127,66)),
-    STEEL("steel", new Color(104,105,107)),
-    ELECTRUM("electrum", new Color(224,220,96)),
-    NICKEL("nickel", new Color(174,185,130)),
-    ALUMINUM("aluminum", new Color(199,205,206)),
-    ZINC("zinc", new Color(215,215,145)),
-    PLATINUM("platinum", new Color(206,222,236)),
-    TITANIUM("titanium", new Color(119,133,153)),
-    GOLD("gold", new Color(255,240,90)),
-    IRON("iron", new Color(168,168,168));
+    COPPER("copper", new Color(158, 90, 56)),
+    TIN("tin", new Color(172, 198, 197)),
+    LEAD("lead", new Color(67, 60, 85)),
+    SILVER("silver", new Color(138, 176, 201)),
+    URANIUM("uranium", new Color(90, 121, 74)),
+    BRASS("brass", new Color(214, 177, 60)),
+    BRONZE("bronze", new Color(181, 127, 66)),
+    STEEL("steel", new Color(104, 105, 107)),
+    ELECTRUM("electrum", new Color(224, 220, 96)),
+    NICKEL("nickel", new Color(174, 185, 130)),
+    ALUMINUM("aluminum", new Color(199, 205, 206)),
+    ZINC("zinc", new Color(215, 215, 145)),
+    PLATINUM("platinum", new Color(206, 222, 236)),
+    TITANIUM("titanium", new Color(119, 133, 153)),
+    GOLD("gold", new Color(255, 240, 90)),
+    IRON("iron", new Color(168, 168, 168));
+
+    public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
 
     public Item woolItem;
 
@@ -49,7 +52,7 @@ public enum SheepTypes
 
     public static void initAll()
     {
-        for(SheepTypes sheepTypes : values())
+        for (SheepTypes sheepTypes : values())
         {
             sheepTypes.init();
         }
@@ -58,6 +61,7 @@ public enum SheepTypes
     public void init()
     {
         entityDropTable = LootTableList.register(new ResourceLocation(SheepMetal.DOMAIN, name));
+        NAME_TO_TYPE.put(name.toLowerCase(), this);
     }
 
     public static SheepTypes get(int value)
@@ -68,6 +72,12 @@ public enum SheepTypes
         }
         return COPPER;
     }
+
+    public static SheepTypes get(String value)
+    {
+        return value != null ? NAME_TO_TYPE.get(value.toLowerCase()) : null;
+    }
+
 
     public ItemStack getWoolItem()
     {
