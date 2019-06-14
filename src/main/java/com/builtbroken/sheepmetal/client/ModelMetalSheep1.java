@@ -1,54 +1,52 @@
 package com.builtbroken.sheepmetal.client;
 
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
-import net.minecraft.client.model.ModelQuadruped;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-public class ModelMetalSheep1 extends ModelQuadruped
+import net.minecraft.client.renderer.entity.model.QuadrupedModel;
+import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class ModelMetalSheep1 extends QuadrupedModel<EntityMetalSheep>
 {
-    private float headRotationAngleX;
+    private float field_78150_aRotationAngleX;
 
     public ModelMetalSheep1()
     {
         super(12, 0.0F);
-        this.head = new ModelRenderer(this, 0, 0);
-        this.head.addBox(-3.0F, -4.0F, -4.0F, 6, 6, 6, 0.6F);
-        this.head.setRotationPoint(0.0F, 6.0F, -8.0F);
-        this.body = new ModelRenderer(this, 28, 8);
-        this.body.addBox(-4.0F, -10.0F, -7.0F, 8, 16, 6, 1.75F);
-        this.body.setRotationPoint(0.0F, 5.0F, 2.0F);
-        float f = 0.5F;
-        this.leg1 = new ModelRenderer(this, 0, 16);
-        this.leg1.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg1.setRotationPoint(-3.0F, 12.0F, 7.0F);
-        this.leg2 = new ModelRenderer(this, 0, 16);
-        this.leg2.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg2.setRotationPoint(3.0F, 12.0F, 7.0F);
-        this.leg3 = new ModelRenderer(this, 0, 16);
-        this.leg3.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg3.setRotationPoint(-3.0F, 12.0F, -5.0F);
-        this.leg4 = new ModelRenderer(this, 0, 16);
-        this.leg4.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.leg4.setRotationPoint(3.0F, 12.0F, -5.0F);
+        this.field_78150_a = new RendererModel(this, 0, 0);
+        this.field_78150_a.addBox(-3.0F, -4.0F, -4.0F, 6, 6, 6, 0.6F);
+        this.field_78150_a.setRotationPoint(0.0F, 6.0F, -8.0F);
+        this.field_78148_b = new RendererModel(this, 28, 8);
+        this.field_78148_b.addBox(-4.0F, -10.0F, -7.0F, 8, 16, 6, 1.75F);
+        this.field_78148_b.setRotationPoint(0.0F, 5.0F, 2.0F);
+        this.field_78149_c = new RendererModel(this, 0, 16);
+        this.field_78149_c.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.field_78149_c.setRotationPoint(-3.0F, 12.0F, 7.0F);
+        this.field_78146_d = new RendererModel(this, 0, 16);
+        this.field_78146_d.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.field_78146_d.setRotationPoint(3.0F, 12.0F, 7.0F);
+        this.field_78147_e = new RendererModel(this, 0, 16);
+        this.field_78147_e.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.field_78147_e.setRotationPoint(-3.0F, 12.0F, -5.0F);
+        this.field_78144_f = new RendererModel(this, 0, 16);
+        this.field_78144_f.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.field_78144_f.setRotationPoint(3.0F, 12.0F, -5.0F);
     }
 
     @Override
-    public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime)
+    public void setLivingAnimations(EntityMetalSheep entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTickTime)
     {
         super.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTickTime);
-        this.head.rotationPointY = 6.0F + ((EntityMetalSheep) entitylivingbaseIn).getHeadRotationPointY(partialTickTime) * 9.0F;
-        this.headRotationAngleX = ((EntityMetalSheep) entitylivingbaseIn).getHeadRotationAngleX(partialTickTime);
+        this.field_78150_a.rotationPointY = 6.0F + entitylivingbaseIn.getHeadRotationPointY(partialTickTime) * 9.0F;
+        this.field_78150_aRotationAngleX = entitylivingbaseIn.getHeadRotationAngleX(partialTickTime);
     }
 
     @Override
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
+    public void setRotationAngles(EntityMetalSheep entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netfield_78150_aYaw, float field_78150_aPitch, float scaleFactor)
     {
-        super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
-        this.head.rotateAngleX = this.headRotationAngleX;
+        super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netfield_78150_aYaw, field_78150_aPitch, scaleFactor);
+        this.field_78150_a.rotateAngleX = this.field_78150_aRotationAngleX;
     }
 }

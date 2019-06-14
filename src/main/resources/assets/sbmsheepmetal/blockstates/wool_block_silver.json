@@ -1,7 +1,7 @@
 {
   "variants": {
-    "normal": [
-      { "model": "sbmsheepmetal:wool_block_silver" }
+    "": [
+      { "model": "sbmsheepmetal:block/wool_block_silver" }
     ]
   }
 }

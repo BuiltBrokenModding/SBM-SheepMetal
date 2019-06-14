@@ -1,13 +1,12 @@
 package com.builtbroken.sheepmetal;
 
+import java.awt.Color;
+import java.util.HashMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTableList;
-
-import java.awt.*;
-import java.util.HashMap;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -32,7 +31,7 @@ public enum SheepTypes
     GOLD("gold", new Color(255, 240, 90)),
     IRON("iron", new Color(168, 168, 168));
 
-    public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
+    public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap<>();
 
     public Item woolItem;
 
@@ -60,7 +59,7 @@ public enum SheepTypes
 
     public void init()
     {
-        entityDropTable = LootTableList.register(new ResourceLocation(SheepMetal.DOMAIN, name));
+        this.entityDropTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name);
         NAME_TO_TYPE.put(name.toLowerCase(), this);
     }
 

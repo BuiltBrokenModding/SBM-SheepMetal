@@ -1,30 +1,34 @@
 package com.builtbroken.sheepmetal.client;
 
+import java.awt.Color;
+
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager;
+
+import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.awt.*;
-
-@SideOnly(Side.CLIENT)
-public class LayerMetalSheepWool implements LayerRenderer<EntityMetalSheep>
+@OnlyIn(Dist.CLIENT)
+public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMetalSheep2>
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(SheepMetal.DOMAIN, "textures/entity/metal_sheep_fur.png");
 
     private final RenderMetalSheep sheepRenderer;
     private final ModelMetalSheep1 sheepModel = new ModelMetalSheep1();
 
-    public LayerMetalSheepWool(RenderMetalSheep sheepRendererIn)
+    public LayerMetalSheepWool(IEntityRenderer<EntityMetalSheep, ModelMetalSheep2> p_i50925_1_)
     {
-        this.sheepRenderer = sheepRendererIn;
+        super(p_i50925_1_);
+
+        sheepRenderer = (RenderMetalSheep)p_i50925_1_;
     }
 
     @Override
-    public void doRenderLayer(EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+    public void func_212842_a_(EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
         if (!entity.getSheared() && !entity.isInvisible())
         {
@@ -33,10 +37,10 @@ public class LayerMetalSheepWool implements LayerRenderer<EntityMetalSheep>
 
             //Color
             Color color = entity.getWoolType().getWoolColor();
-            GlStateManager.color(color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
+            GlStateManager.color3f(color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
 
             //Model setup
-            this.sheepModel.setModelAttributes(this.sheepRenderer.getMainModel());
+            this.func_215332_c().func_217111_a(this.sheepModel);
             this.sheepModel.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
 
             //Rendering

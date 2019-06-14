@@ -6,7 +6,6 @@ import com.builtbroken.sheepmetal.SheepTypes;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -18,13 +17,8 @@ public class BlockMetalWool extends Block
 
     public BlockMetalWool(SheepTypes type)
     {
-        super(Material.IRON);
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 6.0F));
         this.type = type;
-        setHardness(4.0F);
-        setResistance(6.0F);
-        setSoundType(SoundType.METAL);
-        setTranslationKey(SheepMetal.PREFIX + "wool." + type.name);
         setRegistryName(SheepMetal.PREFIX + "wool_block_" + type.name);
-        setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 }

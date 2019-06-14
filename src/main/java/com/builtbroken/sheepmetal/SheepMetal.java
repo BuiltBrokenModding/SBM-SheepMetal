@@ -1,11 +1,7 @@
 package com.builtbroken.sheepmetal;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import com.builtbroken.sheepmetal.config.ConfigSpawn;
 import com.builtbroken.sheepmetal.content.BlockMetalWool;
@@ -13,25 +9,30 @@ import com.builtbroken.sheepmetal.content.ItemMetalWool;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by Dark(DarkGuardsman, Robert) on 7/21/2018.
  */
-@Mod(modid = SheepMetal.DOMAIN, name = "[SBM] Sheep Metal", version = SheepMetal.VERSION)
-@Mod.EventBusSubscriber(modid = SheepMetal.DOMAIN)
+@Mod(SheepMetal.DOMAIN)
+@Mod.EventBusSubscriber(modid = SheepMetal.DOMAIN, bus = Bus.MOD)
 public class SheepMetal
 {
     public static final String DOMAIN = "sbmsheepmetal";
@@ -44,13 +45,23 @@ public class SheepMetal
     public static final String MC_VERSION = "@MC@";
     public static final String VERSION = MC_VERSION + "-" + MAJOR_VERSION + "." + MINOR_VERSION + "." + REVISION_VERSION + "." + BUILD_VERSION;
 
-    public static final int ENTITY_ID_PREFIX = 50;
-    private static int nextEntityID = ENTITY_ID_PREFIX;
+    public static EntityType<EntityMetalSheep> ENTITY_TYPE_METAL_SHEEP = (EntityType<EntityMetalSheep>)EntityType.Builder.<EntityMetalSheep>create(EntityMetalSheep::new, EntityClassification.CREATURE)
+            .size(0.9F, 1.3F)
+            .setTrackingRange(128)
+            .setUpdateInterval(1)
+            .setCustomClientFactory((spawnEntity, world) -> {
+                return new EntityMetalSheep(world);
+            })
+            .build(PREFIX + "sheep.metal")
+            .setRegistryName(new ResourceLocation(DOMAIN, "sheep.metal"));
 
-    private static final Logger logger = LogManager.getLogger(DOMAIN);
+    public SheepMetal()
+    {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigSpawn.CONFIG_SPEC);
+    }
 
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    @SubscribeEvent
+    public static void onFMLCommonSetup(FMLCommonSetupEvent event)
     {
         SheepTypes.initAll();
     }
@@ -61,8 +72,11 @@ public class SheepMetal
         for (SheepTypes type : SheepTypes.values())
         {
             event.getRegistry().register(type.woolItem = new ItemMetalWool(type));
-            event.getRegistry().register(type.woolItemBlock = new ItemBlock(type.woolBlock).setRegistryName(type.woolBlock.getRegistryName()));
+            event.getRegistry().register(type.woolItemBlock = new BlockItem(type.woolBlock, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(type.woolBlock.getRegistryName()));
         }
+
+        event.getRegistry().register(new SpawnEggItem(ENTITY_TYPE_METAL_SHEEP, Color.green.getRGB(), Color.RED.getRGB(), new Item.Properties()
+                .group(ItemGroup.MISC)).setRegistryName(PREFIX + "metal_sheep_spawn_egg"));
     }
 
     @SubscribeEvent
@@ -75,32 +89,29 @@ public class SheepMetal
     }
 
     @SubscribeEvent
-    public static void registerEntity(RegistryEvent.Register<EntityEntry> event)
+    public static void registerEntity(RegistryEvent.Register<EntityType<?>> event)
     {
-        EntityEntryBuilder builder = EntityEntryBuilder.create();
-        builder.name(PREFIX + "sheep.metal");
-        builder.id(new ResourceLocation(DOMAIN, "sheep.metal"), nextEntityID++);
-        builder.tracker(128, 1, true);
-        builder.entity(EntityMetalSheep.class);
-        builder.egg(Color.green.getRGB(), Color.RED.getRGB());
+        event.getRegistry().register(ENTITY_TYPE_METAL_SHEEP);
+    }
 
-        if(ConfigSpawn.SHOULD_SPAWN)
+    @SubscribeEvent
+    public static void onLoadComplete(FMLLoadCompleteEvent event)
+    {
+        List<? extends String> biomes = ConfigSpawn.CONFIG.biomes.get();
+
+        if(ConfigSpawn.CONFIG.shouldSpawn.get() && biomes.size() > 0)
         {
-            List<Biome> biomes = new ArrayList<Biome>();
-
-            for(String location : ConfigSpawn.BIOMES)
+            for(Biome biome : ForgeRegistries.BIOMES)
             {
-                Biome biome = ForgeRegistries.BIOMES.getValue(new ResourceLocation(location));
-
-                if(biome != null)
-                    biomes.add(biome);
-                else
-                    logger.error("SheepMetal#registerEntity() -> Failed to find a biome with id [" + location + "] while loading config data for entity registry");
+                if(biomes.contains(biome.getRegistryName().toString()))
+                {
+                    biome.getSpawns(EntityClassification.CREATURE).add(
+                            new Biome.SpawnListEntry(ENTITY_TYPE_METAL_SHEEP,
+                                    ConfigSpawn.CONFIG.spawnWeight.get(),
+                                    ConfigSpawn.CONFIG.spawnMin.get(),
+                                    ConfigSpawn.CONFIG.spawnMax.get()));
+                }
             }
-
-            builder.spawn(EnumCreatureType.CREATURE, ConfigSpawn.SPAWN_WEIGHT, ConfigSpawn.SPAWN_MIN, ConfigSpawn.SPAWN_MAX, biomes.toArray(new Biome[biomes.size()]));
         }
-
-        event.getRegistry().register(builder.build());
     }
 }

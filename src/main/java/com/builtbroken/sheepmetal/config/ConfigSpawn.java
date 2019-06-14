@@ -3,47 +3,61 @@ package com.builtbroken.sheepmetal.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.builtbroken.sheepmetal.SheepMetal;
+import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.passive.EntitySheep;
+import com.google.common.collect.Lists;
+
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by bl4ckscor3 on 9/16/2018.
  */
-@Config(modid = SheepMetal.DOMAIN, name = "sheepmetal/spawning")
-@Config.LangKey("config.sheepmetal:spawning.title")
 public class ConfigSpawn
 {
-    @Config.Name("should_spawn")
-    @Config.Comment("Should the sheeps spawn in the world")
-    @Config.RequiresMcRestart
-    public static boolean SHOULD_SPAWN = true;
+    public static final ForgeConfigSpec CONFIG_SPEC;
+    public static final ConfigSpawn CONFIG;
 
-    @Config.Name("spawn_weight")
-    @Config.Comment("How likely the entity is to spawn, 5 is the same as a witch. The higher the value, the higher the spawn chance")
-    @Config.RequiresMcRestart
-    public static int SPAWN_WEIGHT = 5;
+    public final BooleanValue shouldSpawn;
+    public final IntValue spawnWeight;
+    public final IntValue spawnMin;
+    public final IntValue spawnMax;
+    public final ConfigValue<List<? extends String>> biomes;
 
-    @Config.Name("spawn_group_min")
-    @Config.Comment("Smallest number to spawn in a group.")
-    @Config.RequiresMcRestart
-    public static int SPAWN_MIN = 1;
+    static
+    {
+        Pair<ConfigSpawn,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ConfigSpawn::new);
 
-    @Config.Name("spawn_group_max")
-    @Config.Comment("Largest number to spawn in a group.")
-    @Config.RequiresMcRestart
-    public static int SPAWN_MAX = 3;
+        CONFIG_SPEC = specPair.getRight();
+        CONFIG = specPair.getLeft();
+    }
 
-    @Config.Name("spawn_biomes")
-    @Config.Comment("Biomes to spawn entities inside")
-    @Config.RequiresMcRestart
-    public static String[] BIOMES = getSheepBiomeSpawnList();
+    ConfigSpawn(ForgeConfigSpec.Builder builder)
+    {
+        shouldSpawn = builder
+                .comment("Should the sheeps spawn in the world")
+                .define("should_spawn", true);
+        spawnWeight = builder
+                .comment("How likely the entity is to spawn, 5 is the same as a witch. The higher the value, the higher the spawn chance")
+                .defineInRange("spawn_weight", 5, 0, Integer.MAX_VALUE);
+        spawnMin = builder
+                .comment("Smallest number to spawn in a group.")
+                .defineInRange("spawn_group_min", 1, 0, Integer.MAX_VALUE);
+        spawnMax = builder
+                .comment("Largest number to spawn in a group.")
+                .defineInRange("spawn_group_max", 3, 0, Integer.MAX_VALUE);
+        biomes = builder
+                .comment("Biomes to spawn entities inside")
+                .defineList("spawn_biomes", Lists.newArrayList(getSheepBiomeSpawnList()), e -> e instanceof String);
+    }
 
     /**
      * @return A String array containig the resource locations of all biomes that vanilla sheep can spawn in
@@ -52,11 +66,11 @@ public class ConfigSpawn
     {
         List<Biome> biomes = new ArrayList<Biome>();
 
-        for(Biome biome : ForgeRegistries.BIOMES.getValuesCollection())
+        for(Biome biome : ForgeRegistries.BIOMES.getValues())
         {
-            for(SpawnListEntry entry : biome.getSpawnableList(EnumCreatureType.CREATURE))
+            for(SpawnListEntry entry : biome.getSpawns(EntityClassification.CREATURE))
             {
-                if(entry.entityClass == EntitySheep.class)
+                if(entry.entityType == EntityType.SHEEP)
                     biomes.add(biome);
             }
         }
