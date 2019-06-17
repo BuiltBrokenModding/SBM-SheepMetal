@@ -8,6 +8,7 @@ Downloads: https://minecraft.curseforge.com/projects/sbm-sheep-metal
 ### v0.1.1
 
 * Fixed sound, hardness, and resistance of metal wool blocks
+* Fixed loot table having null drop functions
 
 ### v0.1.0 - first curse release for 1.12.2 (2/23/2019)
 
