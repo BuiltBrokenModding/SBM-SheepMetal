@@ -284,10 +284,22 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
     @Override
     public EntityMetalSheep createChild(EntityAgeable ageable)
     {
-        EntityMetalSheep EntityMetalSheep = (EntityMetalSheep) ageable;
-        EntityMetalSheep EntityMetalSheep1 = new EntityMetalSheep(this.world);
-        EntityMetalSheep1.setWoolType(EntityMetalSheep.getWoolType()); //TODO add metal mixing
-        return EntityMetalSheep1;
+        //Parent B, this entity is parent A
+        final EntityMetalSheep mate = (EntityMetalSheep) ageable;
+
+        //Create child
+        final EntityMetalSheep child = new EntityMetalSheep(this.world);
+
+        //Get metal outcome
+        child.setWoolType(getMixResult(mate.getWoolType()));
+        return child;
+    }
+
+    public SheepTypes getMixResult(SheepTypes otherSheep)
+    {
+        //TODO add ancestry tree to prevent abusing breeding
+        //TODO add some randomization to prevent abuse
+        return world.rand.nextBoolean() ? this.getWoolType() : otherSheep;
     }
 
     /**
