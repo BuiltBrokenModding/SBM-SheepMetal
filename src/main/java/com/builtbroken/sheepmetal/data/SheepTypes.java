@@ -1,5 +1,6 @@
-package com.builtbroken.sheepmetal;
+package com.builtbroken.sheepmetal.data;
 
+import com.builtbroken.sheepmetal.SheepMetal;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -8,6 +9,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -33,6 +35,7 @@ public enum SheepTypes
     IRON("iron", new Color(168, 168, 168));
 
     public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
+    private static final Random random = new Random();
 
     public Item woolItem;
 
@@ -56,6 +59,12 @@ public enum SheepTypes
         {
             sheepTypes.init();
         }
+    }
+
+    public static SheepTypes random()
+    {
+        //TODO feed into configs to control allowed types
+        return SheepTypes.get(random.nextInt(SheepTypes.values().length - 1));
     }
 
     public void init()

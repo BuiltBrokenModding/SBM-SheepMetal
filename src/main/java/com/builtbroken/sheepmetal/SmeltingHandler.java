@@ -1,5 +1,6 @@
 package com.builtbroken.sheepmetal;
 
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;

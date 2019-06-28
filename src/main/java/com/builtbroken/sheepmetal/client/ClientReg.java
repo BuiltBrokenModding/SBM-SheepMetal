@@ -1,7 +1,7 @@
 package com.builtbroken.sheepmetal.client;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.SheepTypes;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;

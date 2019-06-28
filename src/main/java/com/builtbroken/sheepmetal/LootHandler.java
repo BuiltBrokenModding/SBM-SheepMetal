@@ -1,5 +1,6 @@
 package com.builtbroken.sheepmetal;
 
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.conditions.LootCondition;

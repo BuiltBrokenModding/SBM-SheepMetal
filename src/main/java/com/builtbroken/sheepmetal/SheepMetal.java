@@ -1,17 +1,10 @@
 package com.builtbroken.sheepmetal;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.builtbroken.sheepmetal.config.ConfigSpawn;
 import com.builtbroken.sheepmetal.content.BlockMetalWool;
 import com.builtbroken.sheepmetal.content.ItemMetalWool;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
@@ -25,6 +18,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.

@@ -1,7 +1,7 @@
 package com.builtbroken.sheepmetal.content;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.SheepTypes;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
