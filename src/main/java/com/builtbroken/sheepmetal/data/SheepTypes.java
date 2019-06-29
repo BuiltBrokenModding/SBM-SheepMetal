@@ -185,7 +185,7 @@ public enum SheepTypes
                 "means its an estimation based on a sample set and my not reflect " +
                 "the actual gameplay.\n");
         output.accept("Weights: \n");
-        String.format("%10s >> %6s\n", "METAL", "WEIGHT");
+        output.accept(String.format("%10s >> %6s\n", "METAL", "WEIGHT"));
         for (SheepTypes type : sorted)
         {
             output.accept(String.format("%10s >> %6d\n", type, type.spawnWeight()));
@@ -201,7 +201,7 @@ public enum SheepTypes
 
         //Output results
         output.accept("\nRandomization Output: \n");
-        String.format("%10s >> %6s >> %s\n", "METAL", "COUNT", "PERCENTAGE OF TOTAL");
+        output.accept(String.format("%10s >> %6s >> %s\n", "METAL", "COUNT", "PERCENTAGE OF TOTAL"));
         Arrays.stream(values())
                 .sorted(Comparator.comparingInt(s -> counts[s.ordinal()]))
                 .forEach(s -> {

@@ -16,9 +16,9 @@ public class BlockMetalWool extends Block
 {
     public final SheepTypes type;
 
-    public BlockMetalWool(SheepTypes type)
+    public BlockMetalWool(SheepTypes type, Material material)
     {
-        super(Material.IRON);
+        super(material);
         this.type = type;
         setHardness(4.0F);
         setResistance(6.0F);

@@ -1,11 +1,13 @@
 package com.builtbroken.sheepmetal;
 
+import com.builtbroken.sheepmetal.config.ConfigMain;
 import com.builtbroken.sheepmetal.data.SheepTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -20,27 +22,47 @@ public class SmeltingHandler
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event)
     {
-        for(SheepTypes type : SheepTypes.values())
+        for (SheepTypes type : SheepTypes.values())
         {
-            String name = type.name.substring(0, 1).toUpperCase() + type.name.substring(1, type.name.length());
-            ItemStack ingotStack = getOreItem("ingot" + name);
-            if(ingotStack != null)
+            if (type != SheepTypes.COAL)
             {
-                FurnaceRecipes.instance().addSmelting(type.woolItemBlock, ingotStack, 0.5f);
-            }
+                String name = type.name.substring(0, 1).toUpperCase() + type.name.substring(1, type.name.length());
+                ItemStack ingotStack = getOreItem("ingot" + name);
+                if (ingotStack != null)
+                {
+                    FurnaceRecipes.instance().addSmelting(type.woolItemBlock, ingotStack, 0.5f);
+                }
 
-            ItemStack nuggetStack = getOreItem("nugget" + name);
-            if(nuggetStack != null)
+                ItemStack nuggetStack = getOreItem("nugget" + name);
+                if (nuggetStack != null)
+                {
+                    FurnaceRecipes.instance().addSmelting(type.woolItem, nuggetStack, 0.05f);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onFurnaceBurnTime(FurnaceFuelBurnTimeEvent event)
+    {
+        final ItemStack input = event.getItemStack();
+        if(!input.isEmpty())
+        {
+            if(input.getItem() == SheepTypes.COAL.woolItem)
             {
-                FurnaceRecipes.instance().addSmelting(type.woolItem, nuggetStack, 0.05f);
+                event.setBurnTime(ConfigMain.COAL_ITEM_FUEL);
+            }
+            else if(input.getItem() == SheepTypes.COAL.woolItemBlock)
+            {
+                event.setBurnTime(ConfigMain.COAL_BLOCK_FUEL);
             }
         }
     }
 
     public static ItemStack getOreItem(String name)
     {
-        NonNullList<ItemStack> list =  OreDictionary.getOres(name);
-        if(list  != null)
+        NonNullList<ItemStack> list = OreDictionary.getOres(name);
+        if (list != null)
         {
             for (ItemStack stack : list)
             {

@@ -6,7 +6,9 @@ import com.builtbroken.sheepmetal.content.ItemMetalWool;
 import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
@@ -74,8 +76,10 @@ public class SheepMetal
     {
         for (SheepTypes type : SheepTypes.values())
         {
-            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type));
+            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type,
+                    type != SheepTypes.COAL ? Material.IRON : Material.ROCK));
         }
+        Blocks.FIRE.setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
     }
 
     @SubscribeEvent
