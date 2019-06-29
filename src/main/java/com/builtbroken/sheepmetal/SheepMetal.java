@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -21,7 +22,11 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
+import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +56,7 @@ public class SheepMetal
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        SheepTypes.initAll();
+        SheepTypes.setupTypes();
     }
 
     @SubscribeEvent
@@ -83,23 +88,50 @@ public class SheepMetal
         builder.entity(EntityMetalSheep.class);
         builder.egg(Color.green.getRGB(), Color.RED.getRGB());
 
-        if(ConfigSpawn.SHOULD_SPAWN)
+        if (ConfigSpawn.SHOULD_SPAWN)
         {
             List<Biome> biomes = new ArrayList<Biome>();
 
-            for(String location : ConfigSpawn.BIOMES)
+            for (String location : ConfigSpawn.BIOMES)
             {
                 Biome biome = ForgeRegistries.BIOMES.getValue(new ResourceLocation(location));
 
-                if(biome != null)
+                if (biome != null)
+                {
                     biomes.add(biome);
+                }
                 else
+                {
                     logger.error("SheepMetal#registerEntity() -> Failed to find a biome with id [" + location + "] while loading config data for entity registry");
+                }
             }
 
             builder.spawn(EnumCreatureType.CREATURE, ConfigSpawn.SPAWN_WEIGHT, ConfigSpawn.SPAWN_MIN, ConfigSpawn.SPAWN_MAX, biomes.toArray(new Biome[biomes.size()]));
         }
 
         event.getRegistry().register(builder.build());
+    }
+
+    @Mod.EventHandler
+    public void preInit(FMLPostInitializationEvent event)
+    {
+        final File file = new File(".", "sheep-metal-spawn-output.txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
+        {
+            SheepTypes.outputRandomData((str) -> {
+                try
+                {
+                    writer.write(str);
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException(e);
+                }
+            }, 1000000);
+        }
+        catch (Exception e)
+        {
+            logger.error("Failed to write spawn data output", e);
+        }
     }
 }
