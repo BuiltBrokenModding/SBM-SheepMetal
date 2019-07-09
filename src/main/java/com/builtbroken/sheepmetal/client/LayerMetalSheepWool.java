@@ -1,16 +1,15 @@
 package com.builtbroken.sheepmetal.client;
 
-import java.awt.Color;
-
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.awt.Color;
 
 @OnlyIn(Dist.CLIENT)
 public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMetalSheep2>
@@ -28,7 +27,7 @@ public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMe
     }
 
     @Override
-    public void func_212842_a_(EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+    public void render(EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
         if (!entity.getSheared() && !entity.isInvisible())
         {
@@ -40,7 +39,7 @@ public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMe
             GlStateManager.color3f(color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
 
             //Model setup
-            this.func_215332_c().func_217111_a(this.sheepModel);
+            this.getEntityModel().setModelAttributes(this.sheepModel);
             this.sheepModel.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
 
             //Rendering
