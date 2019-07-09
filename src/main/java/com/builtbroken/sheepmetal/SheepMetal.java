@@ -52,13 +52,11 @@ public class SheepMetal
     public static final String MC_VERSION = "@MC@";
     public static final String VERSION = MC_VERSION + "-" + MAJOR_VERSION + "." + MINOR_VERSION + "." + REVISION_VERSION + "." + BUILD_VERSION;
 
-    public static EntityType<EntityMetalSheep> ENTITY_TYPE_METAL_SHEEP = (EntityType<EntityMetalSheep>)EntityType.Builder.<EntityMetalSheep>create(EntityMetalSheep::new, EntityClassification.CREATURE)
+    public static EntityType<EntityMetalSheep> ENTITY_TYPE_METAL_SHEEP = (EntityType<EntityMetalSheep>) EntityType.Builder.<EntityMetalSheep>create(EntityMetalSheep::new, EntityClassification.CREATURE)
             .size(0.9F, 1.3F)
             .setTrackingRange(128)
             .setUpdateInterval(1)
-            .setCustomClientFactory((spawnEntity, world) -> {
-                return new EntityMetalSheep(world);
-            })
+            .setCustomClientFactory((spawnEntity, world) -> new EntityMetalSheep(world))
             .build(PREFIX + "sheep.metal")
             .setRegistryName(new ResourceLocation(DOMAIN, "sheep.metal"));
 
@@ -94,7 +92,7 @@ public class SheepMetal
             event.getRegistry().register(type.woolBlock = new BlockMetalWool(type,
                     type != SheepTypes.COAL ? Material.IRON : Material.ROCK));
         }
-        ((FireBlock)Blocks.FIRE).setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
+        ((FireBlock) Blocks.FIRE).setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
     }
 
     @SubscribeEvent
@@ -108,11 +106,11 @@ public class SheepMetal
     {
         List<? extends String> biomes = ConfigSheep.CONFIG.biomes.get();
 
-        if(ConfigSheep.CONFIG.shouldSpawn.get() && biomes.size() > 0)
+        if (ConfigSheep.CONFIG.shouldSpawn.get() && biomes.size() > 0)
         {
-            for(Biome biome : ForgeRegistries.BIOMES)
+            for (Biome biome : ForgeRegistries.BIOMES)
             {
-                if(biomes.contains(biome.getRegistryName().toString()))
+                if (biomes.contains(biome.getRegistryName().toString()))
                 {
                     biome.getSpawns(EntityClassification.CREATURE).add(
                             new Biome.SpawnListEntry(ENTITY_TYPE_METAL_SHEEP,
@@ -122,9 +120,14 @@ public class SheepMetal
                 }
             }
         }
+
+        if (ConfigSheep.CONFIG.enableSpawnWeightDebug.get())
+        {
+            writeChanceData();
+        }
     }
 
-    public void writeChanceData()
+    public static void writeChanceData()
     {
         final File file = new File(".", "sheep-metal-spawn-output.txt");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
