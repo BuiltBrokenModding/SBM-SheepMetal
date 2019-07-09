@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
+import java.util.function.IntSupplier;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -22,24 +25,26 @@ import java.util.function.Consumer;
  */
 public enum SheepTypes
 {
-    COPPER("copper", new Color(158, 90, 56), ConfigTypes.COPPER),
-    TIN("tin", new Color(172, 198, 197), ConfigTypes.TIN),
-    LEAD("lead", new Color(67, 60, 85), ConfigTypes.LEAD),
-    SILVER("silver", new Color(138, 176, 201), ConfigTypes.SILVER),
-    URANIUM("uranium", new Color(90, 121, 74), ConfigTypes.URANIUM),
-    BRASS("brass", new Color(214, 177, 60), ConfigTypes.BRASS),
-    BRONZE("bronze", new Color(181, 127, 66), ConfigTypes.BRONZE),
-    STEEL("steel", new Color(104, 105, 107), ConfigTypes.STEEL),
-    ELECTRUM("electrum", new Color(224, 220, 96), ConfigTypes.ELECTRUM),
-    NICKEL("nickel", new Color(174, 185, 130), ConfigTypes.NICKEL),
-    ALUMINUM("aluminum", new Color(199, 205, 206), ConfigTypes.ALUMINUM),
-    ZINC("zinc", new Color(215, 215, 145), ConfigTypes.ZINC),
-    PLATINUM("platinum", new Color(206, 222, 236), ConfigTypes.PLATINUM),
-    TITANIUM("titanium", new Color(119, 133, 153), ConfigTypes.TITANIUM),
-    GOLD("gold", new Color(255, 240, 90), ConfigTypes.GOLD),
-    IRON("iron", new Color(168, 168, 168), ConfigTypes.IRON),
-    OSMIUM("osmium", new Color(107, 142, 168), ConfigTypes.OSMIUM),
-    COAL("coal", new Color(43, 43, 43, 253), ConfigTypes.COAL);
+    COPPER("copper", new Color(158, 90, 56), 12),
+    TIN("tin", new Color(172, 198, 197), 12),
+    LEAD("lead", new Color(67, 60, 85), 8),
+    SILVER("silver", new Color(138, 176, 201), 8),
+    URANIUM("uranium", new Color(90, 121, 74), 1),
+    BRASS("brass", new Color(214, 177, 60), 4),
+    BRONZE("bronze", new Color(181, 127, 66), 8),
+    STEEL("steel", new Color(104, 105, 107), 4),
+    ELECTRUM("electrum", new Color(224, 220, 96), 4),
+    NICKEL("nickel", new Color(174, 185, 130), 8),
+    ALUMINUM("aluminum", new Color(199, 205, 206), 8),
+    ZINC("zinc", new Color(215, 215, 145), 4),
+    PLATINUM("platinum", new Color(206, 222, 236), 8),
+    TITANIUM("titanium", new Color(119, 133, 153), 4),
+    GOLD("gold", new Color(255, 240, 90), 8),
+    IRON("iron", new Color(168, 168, 168), 12),
+    OSMIUM("osmium", new Color(107, 142, 168), 12),
+    COAL("coal", new Color(43, 43, 43, 253), 12);
+
+
 
     public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
 
@@ -60,13 +65,16 @@ public enum SheepTypes
     public final String name;
     private final Color woolColor;
 
-    private final ConfigTypes.SheepConfig config;
+    private final int defaultSpawnWeight;
 
-    SheepTypes(String name, Color woolColor, ConfigTypes.SheepConfig config)
+    public ForgeConfigSpec.IntValue spawnWeight;
+    public ForgeConfigSpec.BooleanValue enabled;
+
+    SheepTypes(String name, Color woolColor, int defaultSpawnWeight)
     {
         this.name = name;
         this.woolColor = woolColor;
-        this.config = config;
+        this.defaultSpawnWeight = defaultSpawnWeight;
     }
 
     public static void setupTypes()
@@ -155,12 +163,15 @@ public enum SheepTypes
 
     public int spawnWeight()
     {
-        return config.spawnWeight;
+        if(spawnWeight == null) {
+            return defaultSpawnWeight;
+        }
+        return spawnWeight.get();
     }
 
     public boolean isEnabled()
     {
-        return config.enable;
+        return enabled == null || enabled.get();
     }
 
     //public static void main(String... args)

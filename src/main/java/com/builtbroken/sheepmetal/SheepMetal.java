@@ -1,6 +1,6 @@
 package com.builtbroken.sheepmetal;
 
-import com.builtbroken.sheepmetal.config.ConfigSpawn;
+import com.builtbroken.sheepmetal.config.ConfigSheep;
 import com.builtbroken.sheepmetal.content.BlockMetalWool;
 import com.builtbroken.sheepmetal.content.ItemMetalWool;
 import com.builtbroken.sheepmetal.data.SheepTypes;
@@ -26,7 +26,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.logging.log4j.Logger;
 
 import java.awt.Color;
 import java.io.BufferedWriter;
@@ -65,7 +64,7 @@ public class SheepMetal
 
     public SheepMetal()
     {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigSpawn.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigSheep.CONFIG_SPEC);
     }
 
     @SubscribeEvent
@@ -107,9 +106,9 @@ public class SheepMetal
     @SubscribeEvent
     public static void onLoadComplete(FMLLoadCompleteEvent event)
     {
-        List<? extends String> biomes = ConfigSpawn.CONFIG.biomes.get();
+        List<? extends String> biomes = ConfigSheep.CONFIG.biomes.get();
 
-        if(ConfigSpawn.CONFIG.shouldSpawn.get() && biomes.size() > 0)
+        if(ConfigSheep.CONFIG.shouldSpawn.get() && biomes.size() > 0)
         {
             for(Biome biome : ForgeRegistries.BIOMES)
             {
@@ -117,9 +116,9 @@ public class SheepMetal
                 {
                     biome.getSpawns(EntityClassification.CREATURE).add(
                             new Biome.SpawnListEntry(ENTITY_TYPE_METAL_SHEEP,
-                                    ConfigSpawn.CONFIG.spawnWeight.get(),
-                                    ConfigSpawn.CONFIG.spawnMin.get(),
-                                    ConfigSpawn.CONFIG.spawnMax.get()));
+                                    ConfigSheep.CONFIG.spawnWeight.get(),
+                                    ConfigSheep.CONFIG.spawnMin.get(),
+                                    ConfigSheep.CONFIG.spawnMax.get()));
                 }
             }
         }
