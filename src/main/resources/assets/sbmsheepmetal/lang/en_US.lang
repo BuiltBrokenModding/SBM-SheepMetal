@@ -18,6 +18,8 @@ item.sbmsheepmetal:wool.platinum.name=Platinum Wool
 item.sbmsheepmetal:wool.titanium.name=Titanium Wool
 item.sbmsheepmetal:wool.gold.name=Gold Wool
 item.sbmsheepmetal:wool.iron.name=Iron Wool
+item.sbmsheepmetal:wool.osmium.name=Osmium Wool
+item.sbmsheepmetal:wool.coal.name=Coal Wool
 
 ## Tile names
 tile.sbmsheepmetal:wool.copper.name=Copper Wool
@@ -36,6 +38,8 @@ tile.sbmsheepmetal:wool.platinum.name=Platinum Wool
 tile.sbmsheepmetal:wool.titanium.name=Titanium Wool
 tile.sbmsheepmetal:wool.gold.name=Gold Wool
 tile.sbmsheepmetal:wool.iron.name=Iron Wool
+tile.sbmsheepmetal:wool.osmium.name=Osmium Wool
+tile.sbmsheepmetal:wool.coal.name=Coal Wool
 
 ## Entity names
 entity.sbmsheepmetal:sheep.wool.copper.name=Copper Wool Sheep
@@ -54,3 +58,5 @@ entity.sbmsheepmetal:sheep.wool.platinum.name=Platinum Wool Sheep
 entity.sbmsheepmetal:sheep.wool.titanium.name=Titanium Wool Sheep
 entity.sbmsheepmetal:sheep.wool.gold.name=Gold Wool Sheep
 entity.sbmsheepmetal:sheep.wool.iron.name=Iron Wool Sheep
+entity.sbmsheepmetal:sheep.wool.osmium.name=Osmium Wool Sheep
+entity.sbmsheepmetal:sheep.wool.coal.name=Coal Wool Sheep

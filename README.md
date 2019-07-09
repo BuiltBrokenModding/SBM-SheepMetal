@@ -5,9 +5,19 @@ Downloads: https://minecraft.curseforge.com/projects/sbm-sheep-metal
 
 ## Change Log
 
+### v0.2.0
+* Added: Genetic Memory
+* Added: Parents (default tracks 3 deep for new sheep)
+* Added: Wool type random selection based on parents for breeding
+* Added: Spawn weights with configs for adjustement
+* Added: Ways to output spawn weights with % chance
+* Added: Coal wool
+* Added: Osmium wool
+
 ### v0.1.1
 
 * Fixed sound, hardness, and resistance of metal wool blocks
+* Fixed loot table having null drop functions
 
 ### v0.1.0 - first curse release for 1.12.2 (2/23/2019)
 

@@ -1,7 +1,7 @@
 package com.builtbroken.sheepmetal.content;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.SheepTypes;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -15,7 +15,7 @@ public class BlockMetalWool extends Block
 {
     public final SheepTypes type;
 
-    public BlockMetalWool(SheepTypes type)
+    public BlockMetalWool(SheepTypes type, Material material)
     {
         super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 6.0F));
         this.type = type;

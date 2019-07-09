@@ -6,8 +6,8 @@ import java.util.List;
 import com.builtbroken.sheepmetal.config.ConfigSpawn;
 import com.builtbroken.sheepmetal.content.BlockMetalWool;
 import com.builtbroken.sheepmetal.content.ItemMetalWool;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -26,6 +26,14 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -63,7 +71,7 @@ public class SheepMetal
     @SubscribeEvent
     public static void onFMLCommonSetup(FMLCommonSetupEvent event)
     {
-        SheepTypes.initAll();
+        SheepTypes.setupTypes();
     }
 
     @SubscribeEvent
@@ -84,8 +92,10 @@ public class SheepMetal
     {
         for (SheepTypes type : SheepTypes.values())
         {
-            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type));
+            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type,
+                    type != SheepTypes.COAL ? Material.IRON : Material.ROCK));
         }
+        Blocks.FIRE.setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
     }
 
     @SubscribeEvent
@@ -112,6 +122,29 @@ public class SheepMetal
                                     ConfigSpawn.CONFIG.spawnMax.get()));
                 }
             }
+        }
+    }
+
+    @Mod.EventHandler
+    public void preInit(FMLPostInitializationEvent event)
+    {
+        final File file = new File(".", "sheep-metal-spawn-output.txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
+        {
+            SheepTypes.outputRandomData((str) -> {
+                try
+                {
+                    writer.write(str);
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException(e);
+                }
+            }, 1000000);
+        }
+        catch (Exception e)
+        {
+            logger.error("Failed to write spawn data output", e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.builtbroken.sheepmetal.client;
 
 import com.builtbroken.sheepmetal.SheepMetal;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
