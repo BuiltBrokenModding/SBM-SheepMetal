@@ -1,9 +1,20 @@
 # SBM-SheepMetal
 Sheep that produce metal wool
 
-Downloads: https://minecraft.curseforge.com/projects/sbm-sheep-metal
+Downloads: https://www.curseforge.com/minecraft/mc-mods/sbm-sheep-metal/files
 
-## Change Log
+## Change Log 1.14.3
+
+### v0.2.1
+* Ported 1.12.2 v0.2.0 changes to 1.14.3
+
+### 0.0.1 (7/9/2019)
+* Update to 1.14.3
+
+### 0.0.1 (6/15/2019)
+* Init 1.14.2 port based on v0.1.1 from 1.12.2
+
+## Change Log 1.12.2
 
 ### v0.2.0
 * Added: Genetic Memory
