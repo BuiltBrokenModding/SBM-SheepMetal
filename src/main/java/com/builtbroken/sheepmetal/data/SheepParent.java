@@ -1,6 +1,7 @@
 package com.builtbroken.sheepmetal.data;
 
-import net.minecraft.nbt.NBTTagCompound;
+
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.Random;
@@ -8,7 +9,7 @@ import java.util.Random;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 6/28/2019.
  */
-public class SheepParent implements INBTSerializable<NBTTagCompound>
+public class SheepParent implements INBTSerializable<CompoundNBT>
 {
     public static final String NBT_TYPE = "type";
     public static final String NBT_PARENT_A = "parent_a";
@@ -64,7 +65,7 @@ public class SheepParent implements INBTSerializable<NBTTagCompound>
         return parent;
     }
 
-    public static SheepParent load(NBTTagCompound nbt)
+    public static SheepParent load(CompoundNBT nbt)
     {
         final SheepParent parent = new SheepParent();
         parent.deserializeNBT(nbt);
@@ -77,33 +78,33 @@ public class SheepParent implements INBTSerializable<NBTTagCompound>
     }
 
     @Override
-    public NBTTagCompound serializeNBT()
+    public CompoundNBT serializeNBT()
     {
-        final NBTTagCompound tag = new NBTTagCompound();
-        tag.setByte(NBT_TYPE, (byte) get().ordinal());
+        final CompoundNBT tag = new CompoundNBT();
+        tag.putByte(NBT_TYPE, (byte) get().ordinal());
         if (getParentA() != null)
         {
-            tag.setTag(NBT_PARENT_A, getParentA().serializeNBT());
+            tag.put(NBT_PARENT_A, getParentA().serializeNBT());
         }
         if (getParentB() != null)
         {
-            tag.setTag(NBT_PARENT_B, getParentB().serializeNBT());
+            tag.put(NBT_PARENT_B, getParentB().serializeNBT());
         }
         return tag;
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt)
+    public void deserializeNBT(CompoundNBT nbt)
     {
-        if (nbt.hasKey(NBT_TYPE))
+        if (nbt.contains(NBT_TYPE))
         {
             type = SheepTypes.get(nbt.getByte(NBT_TYPE));
         }
-        if (nbt.hasKey(NBT_PARENT_A) || nbt.hasKey(NBT_PARENT_B))
+        if (nbt.contains(NBT_PARENT_A) || nbt.contains(NBT_PARENT_B))
         {
             parents = new SheepParent[]{
-                    load(nbt.getCompoundTag(NBT_PARENT_A)),
-                    load(nbt.getCompoundTag(NBT_PARENT_B))
+                    load(nbt.getCompound(NBT_PARENT_A)),
+                    load(nbt.getCompound(NBT_PARENT_B))
             };
         }
     }

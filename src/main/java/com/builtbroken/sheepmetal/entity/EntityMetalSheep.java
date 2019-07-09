@@ -1,18 +1,12 @@
 package com.builtbroken.sheepmetal.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.data.SheepParent;
 import com.builtbroken.sheepmetal.data.SheepTypes;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.BreedGoal;
@@ -230,10 +224,10 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
     @Override
     public void writeAdditional(CompoundNBT compound)
     {
-        super.writeEntityToNBT(compound);
-        compound.setBoolean(NBT_SHEARED, this.getSheared());
-        compound.setByte(NBT_WOOL_TYPE, (byte) this.getWoolType().ordinal());
-        compound.setTag(NBT_PARENT, getParent().serializeNBT());
+        super.writeAdditional(compound);
+        compound.putBoolean(NBT_SHEARED, this.getSheared());
+        compound.putByte(NBT_WOOL_TYPE, (byte) this.getWoolType().ordinal());
+        compound.put(NBT_PARENT, getParent().serializeNBT());
     }
 
     @Override
@@ -242,9 +236,9 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
         super.readAdditional(compound);
         this.setSheared(compound.getBoolean(NBT_SHEARED));
         this.setWoolType(SheepTypes.get(compound.getByte(NBT_WOOL_TYPE)));
-        if (compound.hasKey(NBT_PARENT))
+        if (compound.contains(NBT_PARENT))
         {
-            parents = SheepParent.load(compound.getCompoundTag(NBT_PARENT));
+            parents = SheepParent.load(compound.getCompound(NBT_PARENT));
         }
     }
 
@@ -348,7 +342,7 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
     @Nullable
     public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason spawnReason, @Nullable ILivingEntityData livingdata, @Nullable CompoundNBT nbt)
     {
-        livingdata = super.onInitialSpawn(difficulty, livingdata);
+        livingdata = super.onInitialSpawn(world, difficulty, spawnReason, livingdata, nbt);
         this.setWoolType(SheepTypes.random());
         return livingdata;
     }

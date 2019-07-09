@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTableList;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public enum SheepTypes
 
     public void setup()
     {
-        entityDropTable = LootTableList.register(new ResourceLocation(SheepMetal.DOMAIN, name));
+        entityDropTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name);
         NAME_TO_TYPE.put(name.toLowerCase(), this);
     }
 

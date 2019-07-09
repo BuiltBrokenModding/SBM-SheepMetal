@@ -1,14 +1,14 @@
 package com.builtbroken.sheepmetal;
 
-import java.awt.Color;
-import java.util.List;
-
 import com.builtbroken.sheepmetal.config.ConfigSpawn;
 import com.builtbroken.sheepmetal.content.BlockMetalWool;
 import com.builtbroken.sheepmetal.content.ItemMetalWool;
 import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FireBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
@@ -26,13 +26,13 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,7 +95,7 @@ public class SheepMetal
             event.getRegistry().register(type.woolBlock = new BlockMetalWool(type,
                     type != SheepTypes.COAL ? Material.IRON : Material.ROCK));
         }
-        Blocks.FIRE.setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
+        ((FireBlock)Blocks.FIRE).setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
     }
 
     @SubscribeEvent
@@ -125,8 +125,7 @@ public class SheepMetal
         }
     }
 
-    @Mod.EventHandler
-    public void preInit(FMLPostInitializationEvent event)
+    public void writeChanceData()
     {
         final File file = new File(".", "sheep-metal-spawn-output.txt");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
@@ -144,7 +143,8 @@ public class SheepMetal
         }
         catch (Exception e)
         {
-            logger.error("Failed to write spawn data output", e);
+            e.printStackTrace();
+            //logger.err("Failed to write spawn data output", e); TODO
         }
     }
 }

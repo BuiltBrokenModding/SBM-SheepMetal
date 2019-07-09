@@ -1,8 +1,7 @@
 package com.builtbroken.sheepmetal.content;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.SheepTypes;
-
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 
