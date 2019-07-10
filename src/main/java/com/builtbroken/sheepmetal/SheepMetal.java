@@ -45,13 +45,6 @@ public class SheepMetal
     public static final String DOMAIN = "sbmsheepmetal";
     public static final String PREFIX = DOMAIN + ":";
 
-    public static final String MAJOR_VERSION = "@MAJOR@";
-    public static final String MINOR_VERSION = "@MINOR@";
-    public static final String REVISION_VERSION = "@REVIS@";
-    public static final String BUILD_VERSION = "@BUILD@";
-    public static final String MC_VERSION = "@MC@";
-    public static final String VERSION = MC_VERSION + "-" + MAJOR_VERSION + "." + MINOR_VERSION + "." + REVISION_VERSION + "." + BUILD_VERSION;
-
     public static EntityType<EntityMetalSheep> ENTITY_TYPE_METAL_SHEEP = (EntityType<EntityMetalSheep>) EntityType.Builder.<EntityMetalSheep>create(EntityMetalSheep::new, EntityClassification.CREATURE)
             .size(0.9F, 1.3F)
             .setTrackingRange(128)
