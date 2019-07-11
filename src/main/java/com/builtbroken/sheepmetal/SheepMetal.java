@@ -82,8 +82,7 @@ public class SheepMetal
     {
         for (SheepTypes type : SheepTypes.values())
         {
-            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type,
-                    type != SheepTypes.COAL ? Material.IRON : Material.ROCK));
+            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type));
         }
         ((FireBlock) Blocks.FIRE).setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
     }
