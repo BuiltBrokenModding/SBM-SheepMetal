@@ -1,5 +1,6 @@
 {
-  "type": "forge:ore_shaped",
+  "type": "minecraft:crafting_shaped",
+  "group": "sbmsheepmetal:metal_wool",
   "pattern": [
     "WWW",
     "WWW",
@@ -12,7 +13,6 @@
   },
   "result": {
     "item": "sbmsheepmetal:wool_block_osmium",
-    "data": 0,
     "count": 1
   }
 }
