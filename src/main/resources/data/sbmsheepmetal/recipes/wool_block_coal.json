@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sbmsheepmetal:metal_wool",
+  "pattern": [
+    "WWW",
+    "WWW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "sbmsheepmetal:wool_item_coal"
+    }
+  },
+  "result": {
+    "item": "sbmsheepmetal:wool_block_coal",
+    "count": 1
+  }
+}
