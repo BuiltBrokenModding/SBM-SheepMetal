@@ -44,7 +44,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IShearable;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -169,7 +168,7 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
         {
             return EntityType.SHEEP.getLootTable();
         }
-        return getWoolType().entityDropTable;
+        return getWoolType().deathLootTable;
     }
 
     @Override
@@ -380,7 +379,7 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
         List<ItemStack> ret = new ArrayList<>();
         for (int i = 0; i < dropCount; ++i)
         {
-            ret.add(this.getWoolType().getWoolItem());
+            ret.add(new ItemStack(this.getWoolType().getItem()));
         }
 
         //Play audio

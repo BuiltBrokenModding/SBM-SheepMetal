@@ -1,6 +1,5 @@
 package com.builtbroken.sheepmetal.content;
 
-import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.data.SheepTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -17,6 +16,5 @@ public class ItemMetalWool extends Item
     {
         super(new Item.Properties().group(ItemGroup.MATERIALS));
         this.type = type;
-        setRegistryName(SheepMetal.PREFIX + "wool_item_" + type.name);
     }
 }

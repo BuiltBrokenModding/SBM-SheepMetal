@@ -1,7 +1,6 @@
 package com.builtbroken.sheepmetal.data;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.config.ConfigTypes;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,7 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -18,34 +17,39 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
-import java.util.function.IntSupplier;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by Dark(DarkGuardsman, Robert) on 7/21/2018.
  */
-public enum SheepTypes
+public enum SheepTypes //TODO rebuild as a registry once we stop supporting 1.12, til then leave alone to allow back porting
 {
-    COPPER("copper", new Color(158, 90, 56), 12),
-    TIN("tin", new Color(172, 198, 197), 12),
-    LEAD("lead", new Color(67, 60, 85), 8),
-    SILVER("silver", new Color(138, 176, 201), 8),
-    URANIUM("uranium", new Color(90, 121, 74), 1),
-    BRASS("brass", new Color(214, 177, 60), 4),
-    BRONZE("bronze", new Color(181, 127, 66), 8),
-    STEEL("steel", new Color(104, 105, 107), 4),
-    ELECTRUM("electrum", new Color(224, 220, 96), 4),
-    NICKEL("nickel", new Color(174, 185, 130), 8),
-    ALUMINUM("aluminum", new Color(199, 205, 206), 8),
-    ZINC("zinc", new Color(215, 215, 145), 4),
-    PLATINUM("platinum", new Color(206, 222, 236), 8),
-    TITANIUM("titanium", new Color(119, 133, 153), 4),
-    GOLD("gold", new Color(255, 240, 90), 8),
-    IRON("iron", new Color(168, 168, 168), 12),
-    OSMIUM("osmium", new Color(107, 142, 168), 12),
-    COAL("coal", new Color(43, 43, 43, 253), 12, "minecraft:items/coals", null);
+    /*  0 */ COPPER("copper", new Color(158, 90, 56), 12),
+    /*  1 */ TIN("tin", new Color(172, 198, 197), 12),
+    /*  2 */ LEAD("lead", new Color(67, 60, 85), 8),
+    /*  3 */ SILVER("silver", new Color(138, 176, 201), 8),
+
+    /*  4 */ URANIUM("uranium", new Color(90, 121, 74), 1),
+    /*  5 */ BRASS("brass", new Color(214, 177, 60), 4),
+    /*  6 */ BRONZE("bronze", new Color(181, 127, 66), 8),
+    /*  7 */ STEEL("steel", new Color(104, 105, 107), 4),
+
+    /*  8 */ ELECTRUM("electrum", new Color(224, 220, 96), 4),
+    /*  9 */ NICKEL("nickel", new Color(174, 185, 130), 8),
+    /* 10 */ ALUMINUM("aluminum", new Color(199, 205, 206), 8),
+    /* 11 */ ZINC("zinc", new Color(215, 215, 145), 4),
+
+    /* 12 */ PLATINUM("platinum", new Color(206, 222, 236), 8),
+    /* 13 */ TITANIUM("titanium", new Color(119, 133, 153), 4),
+    /* 14 */ GOLD("gold", new Color(255, 240, 90), 8),
+    /* 15 */ IRON("iron", new Color(168, 168, 168), 12),
+
+    /* 16 */ OSMIUM("osmium", new Color(107, 142, 168), 12),
+    /* 17 */ COAL("coal", new Color(43, 43, 43, 253), 12,
+            "minecraft:items/coals", null),
+    /* 18 */ STONE("stone", new Color(87, 87, 87), 12,
+            "forge:blocks/cobblestone", "forge:blocks/stone");
 
 
     public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
@@ -55,24 +59,24 @@ public enum SheepTypes
     private static final List<SheepTypes> sorted = new ArrayList();
     private static int weightCount;
 
-    //Item/block cache
-    public Item woolItem; //TODO switch to supplier
-
-    public Item woolItemBlock; //TODO switch to supplier
-    public Block woolBlock; //TODO switch to supplier
-
     //Transform items
-    public Tag<Item> ingot;
-    public Tag<Item> nugget;
+    public Tag<Item>[] tags;
 
     //Loot table
-    public ResourceLocation entityDropTable;
+    public final ResourceLocation deathLootTable;
+    public final ResourceLocation shearLootTable;
 
+    //Registry name
+    public final ResourceLocation woolItemName;
+    public final ResourceLocation woolBlockName;
+
+    //Properties
     public final String name;
     private final Color woolColor;
 
     private final int defaultSpawnWeight;
 
+    //Configs
     public ForgeConfigSpec.IntValue spawnWeight;
     public ForgeConfigSpec.BooleanValue enabled;
 
@@ -81,13 +85,23 @@ public enum SheepTypes
         this(name, woolColor, defaultSpawnWeight, "forge:items/ingots/" + name, "forge:items/nuggets/" + name);
     }
 
-    SheepTypes(String name, Color woolColor, int defaultSpawnWeight, String ingot, String nugget)
+    SheepTypes(String name, Color woolColor, int defaultSpawnWeight, String... tags)
     {
         this.name = name;
+        this.woolItemName = new ResourceLocation(SheepMetal.PREFIX + "wool_item_" + name);
+        this.woolBlockName = new ResourceLocation(SheepMetal.PREFIX + "wool_block_" + name);
+
+        this.deathLootTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name);
+        this.shearLootTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name + "_shear");
+
         this.woolColor = woolColor;
         this.defaultSpawnWeight = defaultSpawnWeight;
-        this.ingot = ingot != null ? new ItemTags.Wrapper(new ResourceLocation(ingot)) : null;
-        this.nugget = nugget != null ? new ItemTags.Wrapper(new ResourceLocation(nugget)) : null;
+        if (tags != null && tags.length > 0)
+        {
+            this.tags = Arrays.stream(tags)
+                    .map(s -> new ItemTags.Wrapper(new ResourceLocation("forge", name)))
+                    .toArray(Tag[]::new);
+        }
     }
 
     public static void setupTypes()
@@ -101,7 +115,6 @@ public enum SheepTypes
 
     public void setup()
     {
-        entityDropTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name);
         NAME_TO_TYPE.put(name.toLowerCase(), this);
     }
 
@@ -162,13 +175,12 @@ public enum SheepTypes
     {
         for (SheepTypes type : values())
         {
-            if (type.ingot != null && type.ingot.contains(item))
+            for (Tag<Item> tag : type.tags)
             {
-                return type;
-            }
-            else if (type.nugget != null && type.nugget.contains(item))
-            {
-                return type;
+                if (tag.contains(item))
+                {
+                    return type;
+                }
             }
         }
         return null;
@@ -177,12 +189,6 @@ public enum SheepTypes
     public static SheepTypes get(String value)
     {
         return value != null ? NAME_TO_TYPE.get(value.toLowerCase()) : null;
-    }
-
-
-    public ItemStack getWoolItem()
-    {
-        return new ItemStack(woolItem);
     }
 
     public Color getWoolColor()
@@ -202,6 +208,16 @@ public enum SheepTypes
     public boolean isEnabled()
     {
         return enabled == null || enabled.get();
+    }
+
+    public Block getBlock()
+    {
+        return ForgeRegistries.BLOCKS.getValue(woolBlockName);
+    }
+
+    public Item getItem()
+    {
+        return ForgeRegistries.ITEMS.getValue(woolItemName);
     }
 
     //public static void main(String... args)

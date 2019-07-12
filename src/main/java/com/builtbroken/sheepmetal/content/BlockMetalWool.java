@@ -1,16 +1,11 @@
 package com.builtbroken.sheepmetal.content;
 
-import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.data.SheepTypes;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -27,6 +22,5 @@ public class BlockMetalWool extends Block
                 .sound(type == SheepTypes.COAL ? SoundType.STONE : SoundType.METAL) //TODO customize step sound
                 .hardnessAndResistance(4.0F, 6.0F));
         this.type = type;
-        setRegistryName(SheepMetal.PREFIX + "wool_block_" + type.name);
     }
 }

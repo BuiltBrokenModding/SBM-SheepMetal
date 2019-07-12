@@ -65,26 +65,26 @@ public class SheepMetal
     }
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event)
-    {
-        for (SheepTypes type : SheepTypes.values())
-        {
-            event.getRegistry().register(type.woolItem = new ItemMetalWool(type));
-            event.getRegistry().register(type.woolItemBlock = new BlockItem(type.woolBlock, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(type.woolBlock.getRegistryName()));
-        }
-
-        event.getRegistry().register(new SpawnEggItem(ENTITY_TYPE_METAL_SHEEP, Color.green.getRGB(), Color.RED.getRGB(), new Item.Properties()
-                .group(ItemGroup.MISC)).setRegistryName(PREFIX + "metal_sheep_spawn_egg"));
-    }
-
-    @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event)
     {
         for (SheepTypes type : SheepTypes.values())
         {
-            event.getRegistry().register(type.woolBlock = new BlockMetalWool(type));
+            event.getRegistry().register(new BlockMetalWool(type).setRegistryName(type.woolBlockName));
         }
-        ((FireBlock) Blocks.FIRE).setFireInfo(SheepTypes.COAL.woolBlock, 15, 100);
+        ((FireBlock) Blocks.FIRE).setFireInfo(SheepTypes.COAL.getBlock(), 15, 100);
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event)
+    {
+        for (SheepTypes type : SheepTypes.values())
+        {
+            event.getRegistry().register(new ItemMetalWool(type).setRegistryName(type.woolItemName));
+            event.getRegistry().register(new BlockItem(type.getBlock(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(type.woolBlockName));
+        }
+
+        event.getRegistry().register(new SpawnEggItem(ENTITY_TYPE_METAL_SHEEP, Color.green.getRGB(), Color.RED.getRGB(), new Item.Properties()
+                .group(ItemGroup.MISC)).setRegistryName(PREFIX + "metal_sheep_spawn_egg"));
     }
 
     @SubscribeEvent
