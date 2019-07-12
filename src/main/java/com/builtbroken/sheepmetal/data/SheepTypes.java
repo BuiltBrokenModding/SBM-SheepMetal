@@ -92,7 +92,7 @@ public enum SheepTypes //TODO rebuild as a registry once we stop supporting 1.12
         this.woolBlockName = new ResourceLocation(SheepMetal.PREFIX + "wool_block_" + name);
 
         this.deathLootTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name);
-        this.shearLootTable = new ResourceLocation(SheepMetal.DOMAIN, "entities/" + name + "_shear");
+        this.shearLootTable = new ResourceLocation(SheepMetal.DOMAIN, "shears/" + name);
 
         this.woolColor = woolColor;
         this.defaultSpawnWeight = defaultSpawnWeight;
