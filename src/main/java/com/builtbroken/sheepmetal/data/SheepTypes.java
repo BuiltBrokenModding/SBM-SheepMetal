@@ -5,8 +5,11 @@ import com.builtbroken.sheepmetal.config.ConfigTypes;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.Tags;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -42,8 +45,7 @@ public enum SheepTypes
     GOLD("gold", new Color(255, 240, 90), 8),
     IRON("iron", new Color(168, 168, 168), 12),
     OSMIUM("osmium", new Color(107, 142, 168), 12),
-    COAL("coal", new Color(43, 43, 43, 253), 12);
-
+    COAL("coal", new Color(43, 43, 43, 253), 12, "minecraft:items/coals", null);
 
 
     public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
@@ -59,6 +61,10 @@ public enum SheepTypes
     public Item woolItemBlock; //TODO switch to supplier
     public Block woolBlock; //TODO switch to supplier
 
+    //Transform items
+    public Tag<Item> ingot;
+    public Tag<Item> nugget;
+
     //Loot table
     public ResourceLocation entityDropTable;
 
@@ -72,9 +78,16 @@ public enum SheepTypes
 
     SheepTypes(String name, Color woolColor, int defaultSpawnWeight)
     {
+        this(name, woolColor, defaultSpawnWeight, "forge:items/ingots/" + name, "forge:items/nuggets/" + name);
+    }
+
+    SheepTypes(String name, Color woolColor, int defaultSpawnWeight, String ingot, String nugget)
+    {
         this.name = name;
         this.woolColor = woolColor;
         this.defaultSpawnWeight = defaultSpawnWeight;
+        this.ingot = ingot != null ? new ItemTags.Wrapper(new ResourceLocation(ingot)) : null;
+        this.nugget = nugget != null ? new ItemTags.Wrapper(new ResourceLocation(nugget)) : null;
     }
 
     public static void setupTypes()
@@ -145,6 +158,22 @@ public enum SheepTypes
         return COPPER;
     }
 
+    public static SheepTypes get(Item item)
+    {
+        for (SheepTypes type : values())
+        {
+            if (type.ingot != null && type.ingot.contains(item))
+            {
+                return type;
+            }
+            else if (type.nugget != null && type.nugget.contains(item))
+            {
+                return type;
+            }
+        }
+        return null;
+    }
+
     public static SheepTypes get(String value)
     {
         return value != null ? NAME_TO_TYPE.get(value.toLowerCase()) : null;
@@ -163,7 +192,8 @@ public enum SheepTypes
 
     public int spawnWeight()
     {
-        if(spawnWeight == null) {
+        if (spawnWeight == null)
+        {
             return defaultSpawnWeight;
         }
         return spawnWeight.get();
@@ -214,7 +244,8 @@ public enum SheepTypes
         output.accept(String.format("%10s >> %6s >> %s\n", "METAL", "COUNT", "PERCENTAGE OF TOTAL"));
         Arrays.stream(values())
                 .sorted(Comparator.comparingInt(s -> counts[s.ordinal()]))
-                .forEach(s -> {
+                .forEach(s ->
+                        {
                             int count = counts[s.ordinal()];
                             double percent = count / (double) runs;
                             output.accept(String.format("%10s >> %6d >> %.2f\n", s, count, percent));

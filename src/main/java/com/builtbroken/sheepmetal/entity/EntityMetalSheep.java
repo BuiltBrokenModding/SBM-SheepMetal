@@ -44,6 +44,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -56,6 +57,7 @@ import java.util.List;
  */
 public class EntityMetalSheep extends AnimalEntity implements IShearable
 {
+
     private static final DataParameter<Byte> WOOL_TYPE = EntityDataManager.<Byte>createKey(EntityMetalSheep.class, DataSerializers.BYTE);
     private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.<Boolean>createKey(EntityMetalSheep.class, DataSerializers.BOOLEAN);
     public static final String NBT_SHEARED = "sheared";
@@ -187,6 +189,18 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
     @Override
     public boolean processInteract(PlayerEntity player, Hand hand)
     {
+        //Set wool type based on item used to click sheep
+        if (player.isCreative() && player.isSneaking())
+        {
+            final ItemStack held = player.getHeldItem(hand);
+            final SheepTypes type = getWoolType();
+            final SheepTypes item = SheepTypes.get(held.getItem());
+            if (item != null && item != type)
+            {
+                setWoolType(type);
+            }
+            return true;
+        }
         return super.processInteract(player, hand);
     }
 
