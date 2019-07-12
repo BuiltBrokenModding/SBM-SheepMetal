@@ -2,19 +2,20 @@ package com.builtbroken.sheepmetal;
 
 import com.builtbroken.sheepmetal.config.ConfigSheep;
 import com.builtbroken.sheepmetal.content.BlockMetalWool;
+import com.builtbroken.sheepmetal.content.TagSmeltingRecipe;
 import com.builtbroken.sheepmetal.content.ItemMetalWool;
 import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
@@ -42,6 +43,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = SheepMetal.DOMAIN, bus = Bus.MOD)
 public class SheepMetal
 {
+
     public static final String DOMAIN = "sbmsheepmetal";
     public static final String PREFIX = DOMAIN + ":";
 
@@ -62,6 +64,12 @@ public class SheepMetal
     public static void onFMLCommonSetup(FMLCommonSetupEvent event)
     {
         SheepTypes.setupTypes();
+    }
+
+    @SubscribeEvent
+    public static void registerRecipeType(RegistryEvent.Register<IRecipeSerializer<?>> event)
+    {
+        event.getRegistry().register(new TagSmeltingRecipe().setRegistryName(PREFIX + "smelting"));
     }
 
     @SubscribeEvent
@@ -124,18 +132,17 @@ public class SheepMetal
         final File file = new File(".", "sheep-metal-spawn-output.txt");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
         {
-            SheepTypes.outputRandomData((str) -> {
+            SheepTypes.outputRandomData((str) ->
+            {
                 try
                 {
                     writer.write(str);
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     throw new RuntimeException(e);
                 }
             }, 1000000);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             //logger.err("Failed to write spawn data output", e); TODO
