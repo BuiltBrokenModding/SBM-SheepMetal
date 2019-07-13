@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "sbmsheepmetal:wool_item_iron"
   },
-  "result": "minecraft:gold_iron",
+  "result": "minecraft:iron_nugget",
   "experience": 0.1,
   "cookingtime": 100
 }
