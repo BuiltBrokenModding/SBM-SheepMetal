@@ -18,21 +18,21 @@ public class ModelMetalSheep1 extends QuadrupedModel<EntityMetalSheep>
         this.headModel = new RendererModel(this, 0, 0);
         this.headModel.addBox(-3.0F, -4.0F, -4.0F, 6, 6, 6, 0.6F);
         this.headModel.setRotationPoint(0.0F, 6.0F, -8.0F);
-        this.field_78148_b = new RendererModel(this, 28, 8);
-        this.field_78148_b.addBox(-4.0F, -10.0F, -7.0F, 8, 16, 6, 1.75F);
-        this.field_78148_b.setRotationPoint(0.0F, 5.0F, 2.0F);
-        this.field_78149_c = new RendererModel(this, 0, 16);
-        this.field_78149_c.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.field_78149_c.setRotationPoint(-3.0F, 12.0F, 7.0F);
-        this.field_78146_d = new RendererModel(this, 0, 16);
-        this.field_78146_d.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.field_78146_d.setRotationPoint(3.0F, 12.0F, 7.0F);
-        this.field_78147_e = new RendererModel(this, 0, 16);
-        this.field_78147_e.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.field_78147_e.setRotationPoint(-3.0F, 12.0F, -5.0F);
-        this.field_78144_f = new RendererModel(this, 0, 16);
-        this.field_78144_f.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
-        this.field_78144_f.setRotationPoint(3.0F, 12.0F, -5.0F);
+        this.body = new RendererModel(this, 28, 8);
+        this.body.addBox(-4.0F, -10.0F, -7.0F, 8, 16, 6, 1.75F);
+        this.body.setRotationPoint(0.0F, 5.0F, 2.0F);
+        this.legBackRight = new RendererModel(this, 0, 16);
+        this.legBackRight.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.legBackRight.setRotationPoint(-3.0F, 12.0F, 7.0F);
+        this.legBackLeft = new RendererModel(this, 0, 16);
+        this.legBackLeft.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.legBackLeft.setRotationPoint(3.0F, 12.0F, 7.0F);
+        this.legFrontRight = new RendererModel(this, 0, 16);
+        this.legFrontRight.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.legFrontRight.setRotationPoint(-3.0F, 12.0F, -5.0F);
+        this.legFrontLeft = new RendererModel(this, 0, 16);
+        this.legFrontLeft.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4, 0.5F);
+        this.legFrontLeft.setRotationPoint(3.0F, 12.0F, -5.0F);
     }
 
     @Override
