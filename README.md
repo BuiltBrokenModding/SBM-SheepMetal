@@ -5,7 +5,14 @@ Downloads: https://minecraft.curseforge.com/projects/sbm-sheep-metal
 
 ## Change Log
 
+### v0.3.0
+
+* Added: Black-/Whitelist to control spawn biomes more easily
+* Fixed: Startup crash with The Midnight
+* Removed: Config file "sheepmetal/enable" as it was not used. You can disable spawning in the "sheepmetal/spawning" config
+
 ### v0.2.0
+
 * Added: Genetic Memory
 * Added: Parents (default tracks 3 deep for new sheep)
 * Added: Wool type random selection based on parents for breeding

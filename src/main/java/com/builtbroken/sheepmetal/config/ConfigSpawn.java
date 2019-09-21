@@ -1,15 +1,8 @@
 package com.builtbroken.sheepmetal.config;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraftforge.common.config.Config;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -40,33 +33,18 @@ public class ConfigSpawn
     public static int SPAWN_MAX = 3;
 
     @Config.Name("spawn_biomes")
-    @Config.Comment("Biomes to spawn entities inside")
+    @Config.Comment("Biomes in which to black-/whitelist spawning of the metal sheep. Which behavior (black-/whitelist) is defined in the config option \"list_type\".")
     @Config.RequiresMcRestart
-    public static String[] BIOMES = getSheepBiomeSpawnList();
+    public static String[] BIOME_LIST = {};
 
-    /**
-     * @return A String array containig the resource locations of all biomes that vanilla sheep can spawn in
-     */
-    private static String[] getSheepBiomeSpawnList()
+    @Config.Name("list_type")
+    @Config.Comment({"WHITELIST: Metal sheep can only spawn in the biomes listed in \"spawn_biomes\".",
+    "BLACKLIST: Metal sheep will spawn in the biomes vanilla sheep spawn in, EXCEPT for the ones listed in \"spawn_biomes\""})
+    @Config.RequiresMcRestart
+    public static ListType LIST_TYPE = ListType.BLACKLIST;
+
+    public static enum ListType
     {
-        List<Biome> biomes = new ArrayList<Biome>();
-
-        for(Biome biome : ForgeRegistries.BIOMES.getValuesCollection())
-        {
-            for(SpawnListEntry entry : biome.getSpawnableList(EnumCreatureType.CREATURE))
-            {
-                if(entry.entityClass == EntitySheep.class)
-                    biomes.add(biome);
-            }
-        }
-
-        String[] toReturn = new String[biomes.size()];
-
-        for(int i = 0; i < toReturn.length; i++)
-        {
-            toReturn[i] = biomes.get(i).getRegistryName().toString();
-        }
-
-        return toReturn;
+        BLACKLIST, WHITELIST;
     }
 }
