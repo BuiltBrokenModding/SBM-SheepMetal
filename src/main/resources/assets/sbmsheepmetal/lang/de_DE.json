@@ -19,7 +19,7 @@
     "item.sbmsheepmetal.wool_item_titanium": "Titanwolle",
     "item.sbmsheepmetal.wool_item_gold": "Goldwolle",
     "item.sbmsheepmetal.wool_item_iron": "Eisenwolle",
-    "item.sbmsheepmetal.metal_sheep_spawn_egg": "Erschaffe Metallwollenschaf",
+    "item.sbmsheepmetal.metal_sheep_spawn_egg": "Metallwollenschaf-Spawn-Ei",
 
     "_comment3": "Tile names",
     "block.sbmsheepmetal.wool_block_copper": "Kupferwolle",
