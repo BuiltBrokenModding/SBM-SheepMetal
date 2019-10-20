@@ -1,14 +1,28 @@
 package com.builtbroken.sheepmetal.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.data.SheepParent;
 import com.builtbroken.sheepmetal.data.SheepTypes;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIEatGrass;
+import net.minecraft.entity.ai.EntityAIFollowParent;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAIPanic;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -32,10 +46,6 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -81,6 +91,7 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
         this.tasks.addTask(8, new EntityAILookIdle(this));
     }
 
+    @Override
     protected void updateAITasks()
     {
         this.sheepTimer = this.entityAIEatGrass.getEatingGrassTimer();
@@ -186,7 +197,7 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
         }
         else
         {
-            return this.sheepTimer < 4 ? ((float) this.sheepTimer - p_70894_1_) / 4.0F : -((float) (this.sheepTimer - 40) - p_70894_1_) / 4.0F;
+            return this.sheepTimer < 4 ? (this.sheepTimer - p_70894_1_) / 4.0F : -(this.sheepTimer - 40 - p_70894_1_) / 4.0F;
         }
     }
 
@@ -195,7 +206,7 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
     {
         if (this.sheepTimer > 4 && this.sheepTimer <= 36)
         {
-            float f = ((float) (this.sheepTimer - 4) - p_70890_1_) / 32.0F;
+            float f = (this.sheepTimer - 4 - p_70890_1_) / 32.0F;
             return ((float) Math.PI / 5F) + ((float) Math.PI * 7F / 100F) * MathHelper.sin(f * 28.7F);
         }
         else
@@ -310,6 +321,7 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
      * This function applies the benefits of growing back wool and faster growing up to the acting entity. (This
      * function is used in the AIEatGrass)
      */
+    @Override
     public void eatGrassBonus()
     {
         this.setSheared(false);
@@ -345,7 +357,7 @@ public class EntityMetalSheep extends EntityAnimal implements IShearable
         int dropCount = 1 + this.rand.nextInt(3);
 
         //Collect items
-        List<ItemStack> ret = new ArrayList();
+        List<ItemStack> ret = new ArrayList<>();
         for (int i = 0; i < dropCount; ++i)
         {
             ret.add(this.getWoolType().getWoolItem());

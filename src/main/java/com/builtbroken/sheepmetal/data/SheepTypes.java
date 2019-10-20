@@ -1,13 +1,5 @@
 package com.builtbroken.sheepmetal.data;
 
-import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.config.ConfigTypes;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTableList;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
+
+import com.builtbroken.sheepmetal.SheepMetal;
+import com.builtbroken.sheepmetal.config.ConfigTypes;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootTableList;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -42,11 +43,11 @@ public enum SheepTypes
     OSMIUM("osmium", new Color(107, 142, 168), ConfigTypes.OSMIUM),
     COAL("coal", new Color(43, 43, 43, 253), ConfigTypes.COAL);
 
-    public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap();
+    public static final HashMap<String, SheepTypes> NAME_TO_TYPE = new HashMap<>();
 
     //Spawning random
     private static final Random random = new Random();
-    private static final List<SheepTypes> sorted = new ArrayList();
+    private static final List<SheepTypes> sorted = new ArrayList<>();
     private static int weightCount;
 
     //Item/block cache
@@ -203,12 +204,12 @@ public enum SheepTypes
         output.accept("\nRandomization Output: \n");
         output.accept(String.format("%10s >> %6s >> %s\n", "METAL", "COUNT", "PERCENTAGE OF TOTAL"));
         Arrays.stream(values())
-                .sorted(Comparator.comparingInt(s -> counts[s.ordinal()]))
-                .forEach(s -> {
-                            int count = counts[s.ordinal()];
-                            double percent = count / (double) runs;
-                            output.accept(String.format("%10s >> %6d >> %.2f\n", s, count, percent));
-                        }
+        .sorted(Comparator.comparingInt(s -> counts[s.ordinal()]))
+        .forEach(s -> {
+            int count = counts[s.ordinal()];
+            double percent = count / (double) runs;
+            output.accept(String.format("%10s >> %6d >> %.2f\n", s, count, percent));
+        }
 
                 );
     }
