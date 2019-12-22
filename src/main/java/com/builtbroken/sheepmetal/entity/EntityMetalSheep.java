@@ -1,8 +1,14 @@
 package com.builtbroken.sheepmetal.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.data.SheepParent;
 import com.builtbroken.sheepmetal.data.SheepTypes;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
@@ -45,10 +51,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.network.NetworkHooks;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
@@ -189,7 +191,7 @@ public class EntityMetalSheep extends AnimalEntity implements IShearable
     public boolean processInteract(PlayerEntity player, Hand hand)
     {
         //Set wool type based on item used to click sheep
-        if (player.isCreative() && player.isSneaking())
+        if (player.isCreative() && player.isCrouching())
         {
             final ItemStack held = player.getHeldItem(hand);
             final SheepTypes type = getWoolType();

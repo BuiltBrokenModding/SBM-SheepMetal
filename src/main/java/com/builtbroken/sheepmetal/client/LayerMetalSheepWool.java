@@ -1,55 +1,40 @@
 package com.builtbroken.sheepmetal.client;
 
+import java.awt.Color;
+
 import com.builtbroken.sheepmetal.SheepMetal;
 import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.awt.Color;
-
 @OnlyIn(Dist.CLIENT)
-public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMetalSheep2>
+public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMetalSheep>
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(SheepMetal.DOMAIN, "textures/entity/metal_sheep_fur.png");
 
-    private final RenderMetalSheep sheepRenderer;
-    private final ModelMetalSheep1 sheepModel = new ModelMetalSheep1();
+    private final ModelMetalSheepWool sheepModel = new ModelMetalSheepWool();
 
-    public LayerMetalSheepWool(IEntityRenderer<EntityMetalSheep, ModelMetalSheep2> p_i50925_1_)
+    public LayerMetalSheepWool(IEntityRenderer<EntityMetalSheep, ModelMetalSheep> renderer)
     {
-        super(p_i50925_1_);
-
-        sheepRenderer = (RenderMetalSheep)p_i50925_1_;
+        super(renderer);
     }
 
     @Override
-    public void render(EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+    public void func_225628_a_(MatrixStack stack, IRenderTypeBuffer buffer, int p_225628_3_, EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
     {
         if (!entity.getSheared() && !entity.isInvisible())
         {
-            //Texture
-            this.sheepRenderer.bindTexture(TEXTURE);
-
             //Color
             Color color = entity.getWoolType().getWoolColor();
-            GlStateManager.color3f(color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
-
-            //Model setup
-            this.getEntityModel().setModelAttributes(this.sheepModel);
-            this.sheepModel.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
 
             //Rendering
-            this.sheepModel.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+            func_229140_a_(this.getEntityModel(), this.sheepModel, TEXTURE, stack, buffer, p_225628_3_, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
         }
-    }
-
-    @Override
-    public boolean shouldCombineTextures()
-    {
-        return true;
     }
 }

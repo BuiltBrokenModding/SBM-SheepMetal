@@ -1,8 +1,7 @@
 package com.builtbroken.sheepmetal.client;
 
 import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.data.SheepTypes;
-import com.builtbroken.sheepmetal.entity.EntityMetalSheep;
+
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,6 +20,6 @@ public class ClientReg
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event)
     {
-        RenderingRegistry.registerEntityRenderingHandler(EntityMetalSheep.class, manager -> new RenderMetalSheep(manager));
+        RenderingRegistry.registerEntityRenderingHandler(SheepMetal.ENTITY_TYPE_METAL_SHEEP, RenderMetalSheep::new);
     }
 }
