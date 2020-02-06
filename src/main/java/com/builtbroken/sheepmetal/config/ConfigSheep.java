@@ -3,13 +3,10 @@ package com.builtbroken.sheepmetal.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.builtbroken.sheepmetal.SheepMetal;
-import com.builtbroken.sheepmetal.data.SheepTypes;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.builtbroken.sheepmetal.SheepMetal;
+import com.builtbroken.sheepmetal.data.SheepTypes;
 import com.google.common.collect.Lists;
 
 import net.minecraft.entity.EntityClassification;
@@ -20,13 +17,17 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by bl4ckscor3 on 9/16/2018.
  */
-@Mod.EventBusSubscriber(modid = SheepMetal.DOMAIN)
+@Mod.EventBusSubscriber(modid = SheepMetal.DOMAIN, bus=Bus.MOD)
 public class ConfigSheep
 {
 
@@ -59,7 +60,7 @@ public class ConfigSheep
     {
         //General Settings
         builder.comment("General Settings")
-                .push("general");
+        .push("general");
 
         enableSpawnWeightDebug = builder
                 .comment("Enabled a file to export to the main game directly with spawning weights and chances for sheep")
@@ -82,7 +83,7 @@ public class ConfigSheep
 
         //Spawning Settings
         builder.comment("Global Spawn Settings")
-                .push("spawning");
+        .push("spawning");
         shouldSpawn = builder
                 .comment("Should the sheeps spawn in the world")
                 .define("should_spawn", true);
@@ -102,12 +103,12 @@ public class ConfigSheep
 
         //Per Type Settings
         builder.comment("Per Sheep Settings")
-                .push("sheep");
+        .push("sheep");
 
         for (SheepTypes type : SheepTypes.values())
         {
             builder.comment(("" + type.name.charAt(0)).toUpperCase() + type.name.substring(1) + " Sheep")
-                    .push(type.name);
+            .push(type.name);
 
             type.enabled = builder
                     .comment("Set to true to enable the spawning")
@@ -154,9 +155,9 @@ public class ConfigSheep
     }
 
     @SubscribeEvent
-    public static void configReload(ConfigChangedEvent.OnConfigChangedEvent event)
+    public static void configReload(ModConfig.Reloading event)
     {
-        if (event.getModID() == SheepMetal.DOMAIN)
+        if (event.getConfig().getModId().equalsIgnoreCase(SheepMetal.DOMAIN))
         {
             SheepTypes.configReload();
         }

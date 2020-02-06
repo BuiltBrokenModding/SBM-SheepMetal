@@ -26,7 +26,7 @@ public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMe
     }
 
     @Override
-    public void func_225628_a_(MatrixStack stack, IRenderTypeBuffer buffer, int p_225628_3_, EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
+    public void render(MatrixStack stack, IRenderTypeBuffer buffer, int p_225628_3_, EntityMetalSheep entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
     {
         if (!entity.getSheared() && !entity.isInvisible())
         {
@@ -34,7 +34,7 @@ public class LayerMetalSheepWool extends LayerRenderer<EntityMetalSheep, ModelMe
             Color color = entity.getWoolType().getWoolColor();
 
             //Rendering
-            func_229140_a_(this.getEntityModel(), this.sheepModel, TEXTURE, stack, buffer, p_225628_3_, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
+            renderCopyCutoutModel(this.getEntityModel(), this.sheepModel, TEXTURE, stack, buffer, p_225628_3_, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, color.getRed() / 255f,  color.getGreen() / 255f, color.getBlue() / 255f);
         }
     }
 }
